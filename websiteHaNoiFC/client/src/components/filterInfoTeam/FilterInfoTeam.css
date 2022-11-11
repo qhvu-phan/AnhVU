@@ -1,0 +1,34 @@
+.filter-info-team {
+  background: var(--textColorWhite);
+}
+
+.filter-info-team__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+}
+
+.filter-info-team__container ul li {
+  display: inline-block;
+}
+
+.filter-info-team__container ul li:hover span {
+  cursor: pointer;
+  color: #423391;
+  border-bottom: 2px solid #423391;
+  transition: var(--transition);
+}
+
+.filter-info-team__container ul li span {
+  color: #423391;
+  position: relative;
+  font-weight: 700 !important;
+  margin: 0 1rem;
+  font-family: "Big Shoulders Display", cursive;
+  font-size: 18pt;
+  text-transform: uppercase;
+}
+.filter-info-team__container .active {
+  border-bottom: 2px solid #423391;
+}

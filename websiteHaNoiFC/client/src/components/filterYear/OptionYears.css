@@ -1,0 +1,16 @@
+.option__item {
+  display: grid;
+  cursor: pointer;
+  padding: 0.25rem 1rem;
+  color: #495057;
+  font-size: 18px;
+  font-weight: 400;
+  border: 1px solid #cad4da;
+  background-color: var(--textColorWhite);
+  border-radius: 0.2rem;
+}
+
+.option__item span {
+  margin: 0.3rem 0;
+}
+

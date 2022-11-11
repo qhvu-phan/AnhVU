@@ -1,0 +1,44 @@
+.competition__section-head-option {
+  max-width: 160px;
+  width: max-content;
+  /* margin-top: 20px; */
+  position: relative;
+}
+
+.competition__section-select {
+  border: 1px solid #cad4da;
+  color: #495057;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0.2rem;
+  height: calc(1.5em + 0.5rem + 2px);
+  user-select: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.competition__section-select span {
+  font-size: 18px;
+  font-weight: 400;
+  margin-right: 0.75rem;
+}
+
+.competition__section-select svg {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1024px) {
+  .competition__section-head-option {
+    margin-left: auto;
+    margin-top: 0;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .competition__section-head-option {
+    margin-left: 35%;
+    margin-top: 0;
+  }
+}
