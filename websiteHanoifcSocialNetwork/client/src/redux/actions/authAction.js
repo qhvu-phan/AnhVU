@@ -6,23 +6,28 @@ export const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
     const res = await postDataAPI("login", data);
+    console.log(res.data.user.status);
+    if (res.data.user.status === 2) {
+      alert("User is Block!");
+      window.location.reload();
+    } else {
+      dispatch({
+        type: GLOBALTYPES.AUTH,
+        payload: {
+          token: res.data.access_token,
+          user: res.data.user,
+        },
+      });
 
-    dispatch({
-      type: GLOBALTYPES.AUTH,
-      payload: {
-        token: res.data.access_token,
-        user: res.data.user,
-      },
-    });
+      localStorage.setItem("firstLogin", true);
 
-    localStorage.setItem("firstLogin", true);
-
-    dispatch({
-      type: GLOBALTYPES.ALERT,
-      payload: {
-        success: res.data.msg,
-      },
-    });
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: {
+          success: res.data.msg,
+        },
+      });
+    }
   } catch (err) {
     dispatch({
       type: GLOBALTYPES.ALERT,

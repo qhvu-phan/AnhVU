@@ -71,6 +71,56 @@ const postCtrl = {
     }
   },
 
+  getNewPost: async (req, res) => {
+    try {
+      const features = new APIfeatures(Posts.find({}), req.query).paginating();
+
+      const posts = await features.query
+        .sort("-createdAt")
+        .populate("user likes", "avatar username fullname followers")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "user likes",
+            select: "-password",
+          },
+        });
+
+      res.json({ msg: "Success!", result: posts.length, posts });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  approvePost: async (req, res) => {
+    try {
+      const { id, status } = req.body;
+      const post = await Posts.findOneAndUpdate(
+        { _id: id },
+        {
+          status,
+        }
+      )
+        .populate("user likes", "avatar username fullname")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "user likes",
+            select: "-password",
+          },
+        });
+
+      res.json({
+        msg: "Cập nhật trạng thái bài viết thành công!",
+        newPost: {
+          ...post._doc,
+          status,
+        },
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
   updatePost: async (req, res) => {
     try {
       const { content, images } = req.body;

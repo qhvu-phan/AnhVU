@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const authCtrl = {
   register: async (req, res) => {
     try {
-      const { fullname, username, email, password, gender } = req.body;
+      const { fullname, username, email, password, role, gender } = req.body;
       let newUserName = username.toLowerCase().replace(/ /g, "");
 
       const user_name = await Users.findOne({ username: newUserName });
@@ -17,9 +17,7 @@ const authCtrl = {
         return res.status(400).json({ msg: "Email này đã tồn tại." });
 
       if (password.length < 6)
-        return res
-          .status(400)
-          .json({ msg: "Mật khẩu phải ít nhất 6 kí tự." });
+        return res.status(400).json({ msg: "Mật khẩu phải ít nhất 6 kí tự." });
 
       const passwordHash = await bcrypt.hash(password, 12);
 
@@ -28,6 +26,7 @@ const authCtrl = {
         username: newUserName,
         email,
         password: passwordHash,
+        role,
         gender,
       });
 
@@ -105,17 +104,26 @@ const authCtrl = {
   generateAccessToken: async (req, res) => {
     try {
       const rf_token = req.cookies.refreshtoken;
-      if (!rf_token) return res.status(400).json({ msg: "Vui lòng đăng nhập ngay bây giờ." });
+      if (!rf_token)
+        return res
+          .status(400)
+          .json({ msg: "Vui lòng đăng nhập ngay bây giờ." });
 
       jwt.verify(
         rf_token,
         process.env.REFRESH_TOKEN_SECRET,
         async (err, result) => {
-          if (err) return res.status(400).json({ msg: "Vui lòng đăng nhập ngay bây giờ." });
+          if (err)
+            return res
+              .status(400)
+              .json({ msg: "Vui lòng đăng nhập ngay bây giờ." });
 
           const user = await Users.findById(result.id)
             .select("-password")
-            .populate("followers following", "avatar username fullname followers following");
+            .populate(
+              "followers following",
+              "avatar username fullname followers following"
+            );
 
           if (!user)
             return res.status(400).json({ msg: "Tài khoản không tồn tại." });

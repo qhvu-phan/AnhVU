@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+.navagate {
+  border-right: 1px solid black;
+}

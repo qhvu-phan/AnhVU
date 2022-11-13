@@ -25,6 +25,10 @@ import { getNotifies } from "./redux/actions/notifyAction";
 import CallModal from "./components/message/CallModal";
 import Peer from "peerjs";
 
+import Dasboard from "./components/admin/Dasboard";
+import NewPost from "./components/admin/NewPost";
+import User from "./components/admin/User";
+
 function App() {
   const { auth, status, modal, call } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -82,7 +86,9 @@ function App() {
           <Routes>
             <Route path="/" element={auth.token ? <Home /> : <Login />} />
             <Route path="/register" element={<Register />} />
-
+            <Route path="/dasboard" element={<Dasboard />} />
+            <Route path="/newpost" element={<NewPost />} />
+            <Route path="/user" element={<User />} />
             <Route
               path="/*"
               element={

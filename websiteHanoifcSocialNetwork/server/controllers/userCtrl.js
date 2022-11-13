@@ -29,7 +29,35 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getAllUser: async (req, res) => {
+    try {
+      const users = await Users.find({});
 
+      res.json({ msg: "Success!", result: users.length, users });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+  updateStatus: async (req, res) => {
+    try {
+      const { id, status } = req.body;
+      const user = await Users.findOneAndUpdate(
+        { _id: id },
+        {
+          status,
+        }
+      );
+      res.json({
+        msg: "Cập nhật trạng thái user thành công!",
+        newPost: {
+          ...user._doc,
+          status,
+        },
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   updateUser: async (req, res) => {
     try {
       const { avatar, fullname, mobile, address, story, website, gender } =

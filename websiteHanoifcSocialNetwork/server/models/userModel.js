@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: Number,
+      default: 1,
+    },
     avatar: {
       type: String,
       default:
